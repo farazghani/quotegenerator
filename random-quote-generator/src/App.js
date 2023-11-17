@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import quotesData from './quote.json';
+import CustomComponent from './customComponent';
 
 function App() {
+  const [quote, setQuote] = useState({});
+  const [backgroundColorClass, setBackgroundColorIndex] = useState('#3498db');
+
+  useEffect(() => {
+    generateRandomQuote();
+  }, []);
+
+  const generateRandomQuote = () =>{
+    const backgroundColors = ['bg-primary', 'bg-success', 'bg-info', 'bg-warning', 'bg-danger'];
+
+    const backgroundColorIndex = Math.floor(Math.random() * backgroundColors.length);
+    const randomIndex = Math.floor(Math.random() * quotesData.length);
+    console.log(backgroundColors[backgroundColorIndex]);
+    setQuote(quotesData[randomIndex]);
+    setBackgroundColorIndex(backgroundColors[backgroundColorIndex]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CustomComponent quote={quote} generateRandomQuote={generateRandomQuote}  backgroundColorClass={backgroundColorClass} />
   );
 }
 
